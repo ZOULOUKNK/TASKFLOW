@@ -2,7 +2,7 @@
 
 ## Prérequis
 
-- **Node.js** v18 ou supérieur → [nodejs.org](https://nodejs.org)
+- **Node.js** 20.19+ ou 22.12+ (exigé par Vite 8) → [nodejs.org](https://nodejs.org)
 - **npm** v9+ (inclus avec Node.js)
 - **Git** pour le versionnement
 
@@ -12,8 +12,8 @@ Vérifiez votre version : `node -v` et `npm -v`
 
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/<votre-username>/taskflow.git
-cd taskflow
+git clone https://github.com/ZOULOUKNK/TASKFLOW.git
+cd TASKFLOW
 
 # 2. Installer les dépendances
 npm install
