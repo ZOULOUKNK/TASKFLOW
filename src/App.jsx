@@ -56,6 +56,14 @@ const App = () => {
     setEditingTask(null);
   };
 
+  // Supprimer la tâche en cours de modification doit fermer le
+  // formulaire : sinon « Enregistrer » visait une tâche disparue et la
+  // saisie était perdue sans message.
+  const handleDelete = (id) => {
+    deleteTask(id);
+    if (editingTask?.id === id) setEditingTask(null);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -93,7 +101,7 @@ const App = () => {
               tasks={filteredTasks}
               onToggle={toggleTask}
               onEdit={handleEdit}
-              onDelete={deleteTask}
+              onDelete={handleDelete}
             />
           </section>
         </div>

@@ -29,28 +29,44 @@ const defaultTasks = [
   },
 ];
 
+// Les exemples ne s'affichent qu'au tout premier lancement (rien en
+// mémoire). Une liste vide enregistrée est un choix de l'utilisateur :
+// elle doit rester vide après rechargement.
 const loadFromStorage = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultTasks;
+    if (raw === null) return defaultTasks;
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultTasks;
+    return Array.isArray(parsed) ? parsed : defaultTasks;
   } catch {
     return defaultTasks;
   }
 };
+
+// crypto.randomUUID n'existe que dans un contexte sécurisé (https ou
+// localhost) : ouverte via l'adresse IP du réseau local en http,
+// l'application plantait à chaque ajout.
+const newId = () =>
+  typeof globalThis.crypto?.randomUUID === "function"
+    ? globalThis.crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState(loadFromStorage);
 
   // Sauvegarde automatique à chaque modification
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    } catch {
+      // Navigation privée ou quota dépassé : l'application reste
+      // utilisable, seule la sauvegarde est perdue.
+    }
   }, [tasks]);
 
   const addTask = (data) => {
     const newTask = {
-      id: crypto.randomUUID(),
+      id: newId(),
       title: data.title.trim(),
       category: data.category,
       priority: data.priority,
