@@ -1,15 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Police Inter chargée dans index.html */
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
+/* Styles de base dans la couche « base » : hors couche, ils écraseraient
+   les classes utilitaires de Tailwind 4 (p-4, mx-auto…). */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+  }
 }
 
 /* Transition douce sur les tâches */
