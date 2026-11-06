@@ -1,0 +1,16 @@
+# Dépendances et build Vite
+node_modules/
+dist/
+*.local
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Journaux, éditeurs, systèmes
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
